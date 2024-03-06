@@ -15,3 +15,12 @@
   - 기존 컴포넌트에 styled를 씌우고, 그 컴포넌트를 export 하여 사용하면 기존 컴포넌트에 적용할 수 있다.  
 
 - https://github.com/lee02g29/algorithm/blob/main/%EB%B0%B1%EC%A4%80/%EA%B3%A8%EB%93%9C/17471.java  
+
+<h2>2024/03/06</h2>
+
+- 프로젝트 최초 세팅
+
+- 프로젝트 환경 테스트 겸 컴포넌트 테스트
+  - 하단 네비게이션 메뉴
+
+- https://github.com/lee02g29/algorithm/blob/main/%EB%B0%B1%EC%A4%80/%EC%8B%A4%EB%B2%84/1931.java  
