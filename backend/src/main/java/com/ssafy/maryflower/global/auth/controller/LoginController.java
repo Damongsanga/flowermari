@@ -1,4 +1,4 @@
-package com.ssafy.maryflower.global.auth;
+package com.ssafy.maryflower.global.auth.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

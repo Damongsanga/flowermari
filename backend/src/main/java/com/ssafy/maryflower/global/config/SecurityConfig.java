@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,8 +40,15 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
+        .cors(AbstractHttpConfigurer::disable)
+        .httpBasic(AbstractHttpConfigurer::disable)
         .csrf(CsrfConfigurer::disable)
-        .authorizeHttpRequests(config -> config.anyRequest().permitAll())
+        .authorizeHttpRequests(request -> request
+            .requestMatchers("/", "/member", "/member/check", "/api/v1/auth/**", "/oauth2/**").permitAll()
+            .requestMatchers("/auth/login", "/auth/reissue", "auth/oauth2/login/*").permitAll()
+            // 이 밖에 모든 요청에 대해서 인증을 필요로 한다는 설정
+            .anyRequest().authenticated())
+
         .oauth2Login(oauth2Configurer -> oauth2Configurer
           .loginPage("/login")
           .successHandler(successHandler())
