@@ -7,9 +7,11 @@ import com.ssafy.maryflower.bouquet.service.DataPublishService;
 import com.ssafy.maryflower.bouquet.sse.SseEmitters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bouquet")
@@ -21,8 +23,8 @@ public class BouquetController {
     private final CacheService cacheService;
     private final DataPublishService DataPublishService;
 
-    @GetMapping("/text-input")
-    public SseEmitter processSendUserInputToAIServer(@RequestBody UserDataHolder userDataHolder){
+    @PostMapping("/text-input")
+    private SseEmitter processSendUserInputToAIServer(@RequestBody UserDataHolder userDataHolder){
 
         // 토큰에서 userId 추출.
         Long userId=1L;
@@ -40,6 +42,7 @@ public class BouquetController {
 
         // userData를 담아 놓을 Dto 생성
         userDataHolder.setUserId (userId);
+        userDataHolder.setRequestId(requestId);
 
         // userID를 key로 하여 데이터 Redis 캐시에 저장.
         cacheService.cacheUserDataWithUserId(requestId, userDataHolder);
@@ -50,5 +53,26 @@ public class BouquetController {
         // sseEmitter 생성 후 반환
         return sseEmitters.addEmitter(requestId);
     }
+
+//    @PostMapping("/re-generate")
+//    private ResponseEntity<?> processSendUserFlowersToAIServer(List<String> flowers){
+//        // 토큰에서 userId 추출.
+//        Long userId=1L;
+//
+//        // api 호출 회수 조회.
+//        if(bouquetService.checkApiUses(userId)>5) {
+//            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS,"API 사용 횟수를 초과하였습니다");
+//        }
+//
+//        // api 사용로그 저장
+//        bouquetService.createApiLog(userId);
+//
+//        // redis 캐시 확인해 requestId 조회.
+//
+//
+//
+//    }
+
+
 
 }
