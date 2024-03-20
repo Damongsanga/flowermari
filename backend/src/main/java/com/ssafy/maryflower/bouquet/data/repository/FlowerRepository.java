@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     // 이름으로 id 조회
-    @Query("SELECT f.flowerId FROM Flower f WHERE f.koreanName= : name")
+    @Query("SELECT f.flowerId FROM Flower f WHERE f.koreanName= :name")
     Optional<Long> findFlowerByName(@Param("name") String name);
 
     @Query(value =

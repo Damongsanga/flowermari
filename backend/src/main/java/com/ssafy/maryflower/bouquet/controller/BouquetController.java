@@ -1,6 +1,7 @@
 package com.ssafy.maryflower.bouquet.controller;
 
 import com.ssafy.maryflower.bouquet.data.dto.request.UserDataHolder;
+import com.ssafy.maryflower.bouquet.data.repository.FlowerRepository;
 import com.ssafy.maryflower.bouquet.service.BouquetService;
 import com.ssafy.maryflower.bouquet.service.CacheService;
 import com.ssafy.maryflower.bouquet.service.DataPublishService;
@@ -13,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.util.List;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/bouquet")
 @RequiredArgsConstructor
@@ -22,6 +25,19 @@ public class BouquetController {
     private final BouquetService bouquetService;
     private final CacheService cacheService;
     private final DataPublishService DataPublishService;
+    private final FlowerRepository flowerRepository;
+    @PostMapping("/test")
+    private ResponseEntity<String> forTest(){
+        return ResponseEntity.ok("Success");
+    }
+
+    @PostMapping("/test2")
+    private ResponseEntity<String> forDBTest(){
+
+        Optional<Long> test= flowerRepository.findFlowerByName("test");
+
+        return ResponseEntity.ok("success");
+    }
 
     @PostMapping("/text-input")
     private SseEmitter processSendUserInputToAIServer(@RequestBody UserDataHolder userDataHolder){
