@@ -1,11 +1,14 @@
 package com.ssafy.maryflower.infrastructure.config;
 
+import com.ssafy.maryflower.bouquet.service.DataSubscribeService;
+import com.ssafy.maryflower.infrastructure.RedisMessageListener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -20,6 +23,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @RequiredArgsConstructor
 public class RedisConfig {
+
+    private final RedisMessageListener redisMessageListener;
 
     @Value("${spring.data.redis.host}")
     private String host;
@@ -53,17 +58,17 @@ public class RedisConfig {
 
 
     // Redis 메시지 리스너 어댑터 설정
-//    @Bean
-//    MessageListenerAdapter messageListenerAdapter() {
-//        return new MessageListenerAdapter(new RedisSubService(sseEmitters));
-//    }
+    @Bean
+    MessageListenerAdapter messageListenerAdapter() {
+        return new MessageListenerAdapter(redisMessageListener);
+    }
 
     // Redis 메시지 리스너 컨테이너 설정
     @Bean
     RedisMessageListenerContainer redisContainer() {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(redisConnectionFactory());
-//        container.addMessageListener(messageListenerAdapter(), Topic1());
+        container.addMessageListener(messageListenerAdapter(), Topic1());
         return container;
     }
 
@@ -72,8 +77,5 @@ public class RedisConfig {
     ChannelTopic Topic1() {
         return new ChannelTopic("ch2");
     }
-
-
-
 
 }

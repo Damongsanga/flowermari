@@ -12,8 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FlowerDto {
 
-    private String imgurl;
+    private Long flowerId;
+    private String imgUrl;
     private String name;
     private String meaning;
     private String color;
+
 }

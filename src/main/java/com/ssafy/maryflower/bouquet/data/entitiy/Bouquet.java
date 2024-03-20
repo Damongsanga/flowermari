@@ -18,17 +18,11 @@ public class Bouquet extends BaseEntity {
     private String message;
     private String imageUrl;
 
-    @ManyToMany(mappedBy = "bouquets")
-    private List<Member> members=new ArrayList<>();
+    @OneToMany(mappedBy = "bouquet")
+    private List<Flowerbouquet> flowerBouquets = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "flower_bouquet", // 연결테이블 이름 지정.
-            joinColumns = @JoinColumn(name = "boouquet_id"), // Bouquet 측의 조인 엔티티 컬럼 설정
-            inverseJoinColumns = @JoinColumn(name="flower_id") // Flower 엔티티 측의 조인컬럼 설정
-    )
-
-    private List<Flower> flowers=new ArrayList<>();
+    @OneToMany(mappedBy = "bouquet")
+    private List<Memberbouquet> memberbouquets = new ArrayList<>();
     /*
     매핑되는 상대테이블의 List를 가지고 있는 이유
     - 한 엔티티에서 연관된 다른 엔티티로의 접근과 반대 방향으로의 접근 모두 가능하게 하기 위해.

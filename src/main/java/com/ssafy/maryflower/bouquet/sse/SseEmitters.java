@@ -1,15 +1,12 @@
 package com.ssafy.maryflower.bouquet.sse;
 
-import com.ssafy.maryflower.bouquet.data.dto.response.BouquetDetailDto;
-import lombok.Setter;
+import com.ssafy.maryflower.bouquet.data.dto.response.firstGenerateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class SseEmitters {
@@ -36,11 +33,11 @@ public class SseEmitters {
     }
 
     // requestId에 따라 해당 클라이언트에게 메세지 전송.
-    public void sendBouquetDetailDtoToClient(String requestId,BouquetDetailDto bouquetDetailDto){
+    public void sendfirstGenerateDtoToClient(String requestId,firstGenerateDto firstGenerateDto){
         SseEmitter emitter= emitters.get(requestId);
         if(emitter !=null){
             try{
-                emitter.send(SseEmitter.event().name("message").data(bouquetDetailDto));
+                emitter.send(SseEmitter.event().name("firstGenerateEvent").data(firstGenerateDto));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

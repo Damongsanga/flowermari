@@ -7,7 +7,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlowersTransferDto {
-    private List<String> flowers;
+    private List<Long> flowersId;
     private String requestId;
 
 }

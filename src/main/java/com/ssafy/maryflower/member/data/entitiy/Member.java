@@ -2,6 +2,7 @@ package com.ssafy.maryflower.member.data.entitiy;
 
 import com.ssafy.maryflower.bouquet.data.entitiy.ApiLog;
 import com.ssafy.maryflower.bouquet.data.entitiy.Bouquet;
+import com.ssafy.maryflower.bouquet.data.entitiy.Memberbouquet;
 import com.ssafy.maryflower.global.BaseEntity;
 import jakarta.persistence.*;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 @Entity
 public class Member extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
@@ -28,13 +30,7 @@ public class Member extends BaseEntity {
      중간 테이블에 대한 정보 명시
 
      */
-    @ManyToMany
-    // JoinTable은 주로 다대다관계에서 연관관계의 주인 쪽에서 정의하는게 일반적.
-    @JoinTable(
-            name = "member_bouquet", // 중간 테이블 이름.
-            joinColumns = @JoinColumn(name="member_id"), // member 엔터티 측의 조인 컬럼 설정.
-            inverseJoinColumns = @JoinColumn(name = "bouquet_id") // bouquet 엔터티 측의 조인 컬럼 설정.
-    )
+    @OneToMany(mappedBy = "member")
+    private List<Memberbouquet> memberbouquets=new ArrayList<>();
     // 매핑되는 상대 엔티티 List 저장. .
-    private List<Bouquet> bouquets=new ArrayList<>();
 }

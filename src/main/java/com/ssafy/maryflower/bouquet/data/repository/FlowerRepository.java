@@ -1,30 +1,28 @@
 package com.ssafy.maryflower.bouquet.data.repository;
 
+import com.ssafy.maryflower.bouquet.data.dto.response.FlowerDto;
 import com.ssafy.maryflower.bouquet.data.entitiy.Flower;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface FlowerRepository extends JpaRepository<Flower, Long> {
-    // 일단은 단일 꽃 조회.
-    // 추후 jpa 익숙해지면 List로 jpql로 한번에 가져오자. -> DB 커넥션 적어져 성능 향상.
-    Flower findByKoreanName(String name);
 
-    List<Flower> findBycolor(String color);
+    // 이름으로 id 조회
+    @Query("SELECT f.flowerId FROM Flower f WHERE f.koreanName= : name")
+    Optional<Long> findFlowerByName(@Param("name") String name);
 
     @Query(value =
-            "SELECT f.flower_id, f.english_name, f.korean_name, " +
-                    "f.color, f.meaning, f.image_url, COUNT(fb.bouquet_id) AS usageCount " +
+            "SELECT f.flower_id,  COUNT(fb.bouquet_id) AS usageCount " +
                     "FROM flower f " +
                     "JOIN flower_bouquet fb ON f.flower_id = fb.flower_id " +
                     "GROUP BY f.flower_id " +
                     "ORDER BY usageCount DESC LIMIT 7",
             nativeQuery = true)
-    List<Flower> findTopUsedFlowers();
-
-
+    List<Long> findTopUsedFlowers();
 
 }
 /*

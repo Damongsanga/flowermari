@@ -28,7 +28,9 @@ public class Flower extends BaseEntity {
      연관 관계의 주인은 외래 키를 직접 관리하며, 주인이 아닌 쪽은 단지 연관관계를 반영하기 위해 존재.
      */
 
-    @ManyToMany(mappedBy ="flowers")
+    @OneToMany(mappedBy = "flower")
+    private List<Flowerbouquet> flowerBouquets = new ArrayList<>();
 
-    private List<Bouquet> bouquets=new ArrayList<>();
+
+
 }

@@ -24,10 +24,13 @@ public class FlowerCombinationService {
 
         // HTTP 헤더 설정 : 수락 가능한 응답 타입, 컨텐츠 타입, 인증 정보를 설정.
         HttpHeaders headers=new HttpHeaders();
+
         // 응답으로 JSON을 받겠다는 의미.
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
         // 요청 본문의 컨텐츠 타입이 JSON임을 나타냄.
         headers.setContentType(MediaType.APPLICATION_JSON);
+
         // API 인증을 위한 헤더, 여기서는 Bearer 토큰을 사용.
         headers.set("Authorization","Bearer "+apiKey);
 

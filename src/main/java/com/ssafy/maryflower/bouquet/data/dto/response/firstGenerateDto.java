@@ -4,6 +4,7 @@ import com.ssafy.maryflower.bouquet.data.entitiy.Flower;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -18,19 +19,22 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BouquetDetailDto {
+@Setter
+public class firstGenerateDto {
 
     // 꽃다발이 저장된 url
-    private String bouqueturl;
+    private String bouquetUrl;
 
     // 사용자의 꽃다발 생성 요청 횟수.
-    private String requestcnt;
+    private String apiUsageCount;
 
     // 꽃다발 생성에 사용된 꽃 데이터
-    private List<Flower> usedflowers;
+    private List<Long> usedFlower;
 
-    private List<Flower> recommendotherflowers;
+    private List<Long> recommendByMeaning;
 
-    private AllFlowers allflowers;
+    private List<Long> recommendByPopularity;
+
+    private List<FlowerDto> allFlowers;
 
 }
