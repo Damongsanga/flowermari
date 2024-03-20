@@ -24,7 +24,7 @@ repositories {
 dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -33,6 +33,23 @@ dependencies {
 
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// aws S3
+	implementation 'com.amazonaws:aws-java-sdk-lambda:1.12.641'
+	implementation 'com.amazonaws:aws-java-sdk-core:1.12.641'
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.641'
+	implementation 'com.amazonaws:jmespath-java:1.12.641'
+
+	//DB
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// cache
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
