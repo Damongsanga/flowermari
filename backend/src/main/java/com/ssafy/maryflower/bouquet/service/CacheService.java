@@ -7,6 +7,7 @@ import com.ssafy.maryflower.bouquet.data.dto.response.reGenerateDto;
 import com.ssafy.maryflower.bouquet.data.entitiy.Flower;
 import com.ssafy.maryflower.bouquet.data.repository.FlowerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -43,14 +44,23 @@ public class CacheService {
         return null;
     }
 
+    @CacheEvict(value = "UserDataHolder", key="#requestId")
+    public void deleteUserDataHolderDto(String requestId){
+    }
+
     @CachePut(value = "firstGenerateDto", key="#requestId")
     public firstGenerateDto cachefirstGenerateDto(String requestId, firstGenerateDto firstgeneratedto){
         return firstgeneratedto;
     }
 
+
     @Cacheable(value = "firstGenerateDto", key="#requestId")
     public firstGenerateDto cachefirstGenerateDto(String requestId){
         return null;
+    }
+
+    @CacheEvict(value = "firstGenerateDto", key="#requestId")
+    public void deleteFirstGenerateDto(String requestId){
     }
 
     @CachePut(value = "reGenerateDto", key="#requestId")
@@ -60,8 +70,12 @@ public class CacheService {
 
     @Cacheable(value = "reGenerateDto", key="#requestId")
     public reGenerateDto cachereGenerateDto(String requestId){
-
         return null;
+    }
+
+    @CacheEvict(value = "reGenerateDto", key="#requestId")
+    public void deleteRegenerateDtoFromCache(String requestId){
+
     }
     /*
     Redis Cache에서 먼저 데이터 확인 후, 없으면 DB 조회
@@ -98,5 +112,8 @@ public class CacheService {
     public String cacheRequestIdWithUserId(Long userId){
         return null;
     }
+
+    @CacheEvict(value="requestId", key="userId")
+    public void deleteRequestIdFromCache(Long userId){}
 
 }

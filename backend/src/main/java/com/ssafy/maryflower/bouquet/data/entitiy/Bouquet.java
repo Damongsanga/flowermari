@@ -3,10 +3,13 @@ package com.ssafy.maryflower.bouquet.data.entitiy;
 import com.ssafy.maryflower.global.BaseEntity;
 import com.ssafy.maryflower.member.data.entitiy.Member;
 import jakarta.persistence.*;
+import lombok.Setter;
+
 import java.util.List;
 import java.util.ArrayList;
 
 @Entity
+@Setter
 public class Bouquet extends BaseEntity {
 
     @Id
