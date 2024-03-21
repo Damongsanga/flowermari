@@ -14,6 +14,8 @@ public class DataSubscribeService {
     private final SseEmitters sseEmitters;
     private final CacheService cacheService;
     public void subscribeBouquetDataFromAIServer(BouquetUrlTransferDto bouquetUrlTransferDto){
+        // Test
+        System.out.println(bouquetUrlTransferDto.getBouquetUrl()+ "  "+bouquetUrlTransferDto.getRequestId());
 
         if(cacheService.cachereGenerateDto(bouquetUrlTransferDto.getRequestId())!=null){
             reGenerateDto regeneratedto= cacheService.cachereGenerateDto(bouquetUrlTransferDto.getRequestId());
@@ -25,5 +27,7 @@ public class DataSubscribeService {
             sseEmitters.sendGenerateDtoToClient(bouquetUrlTransferDto.getRequestId(),firstgeneratedto);
         }
     }
+
+
 
 }

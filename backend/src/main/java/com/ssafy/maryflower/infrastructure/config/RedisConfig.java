@@ -2,6 +2,7 @@ package com.ssafy.maryflower.infrastructure.config;
 
 import com.ssafy.maryflower.bouquet.service.DataSubscribeService;
 import com.ssafy.maryflower.infrastructure.RedisMessageListener;
+import com.ssafy.maryflower.infrastructure.TestRedisMessageListener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     private final RedisMessageListener redisMessageListener;
+    private final TestRedisMessageListener testRedisMessageListener;
 
     @Value("${spring.data.redis.host}")
     private String host;
@@ -39,9 +41,9 @@ public class RedisConfig {
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
 
-//        configuration.setHostName(host);
-//        configuration.setPort(port);
-//        configuration.setPassword(password);
+        configuration.setHostName(host);
+        configuration.setPort(port);
+        configuration.setPassword(password);
 
         return new LettuceConnectionFactory(configuration);
     }
@@ -63,12 +65,21 @@ public class RedisConfig {
         return new MessageListenerAdapter(redisMessageListener);
     }
 
+
+    // test 용.
+    @Bean
+    MessageListenerAdapter TestmessageListenerAdapter() {
+        return new MessageListenerAdapter(testRedisMessageListener);
+    }
+
     // Redis 메시지 리스너 컨테이너 설정
     @Bean
     RedisMessageListenerContainer redisContainer() {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(redisConnectionFactory());
         container.addMessageListener(messageListenerAdapter(), Topic1());
+        // 테스트 용
+        container.addMessageListener(TestmessageListenerAdapter(),TestTopic());
         return container;
     }
 
@@ -77,5 +88,12 @@ public class RedisConfig {
     ChannelTopic Topic1() {
         return new ChannelTopic("ch2");
     }
+
+    // test용
+    @Bean
+    ChannelTopic TestTopic() {
+        return new ChannelTopic("test");
+    }
+
 
 }

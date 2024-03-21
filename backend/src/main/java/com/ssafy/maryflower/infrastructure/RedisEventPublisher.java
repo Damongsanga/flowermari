@@ -16,4 +16,7 @@ public class RedisEventPublisher {
         redisTemplate.convertAndSend("ch1", flowersTransferDto);
     }
 
+    public void TestsendMessage(String str){
+        redisTemplate.convertAndSend("test", str);
+    }
 }

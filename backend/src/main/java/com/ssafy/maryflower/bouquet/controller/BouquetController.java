@@ -27,20 +27,7 @@ public class BouquetController {
     private final BouquetService bouquetService;
     private final CacheService cacheService;
     private final DataPublishService DataPublishService;
-    private final FlowerRepository flowerRepository;
 
-    @PostMapping("/test")
-    private ResponseEntity<String> forTest() {
-        return ResponseEntity.ok("Success");
-    }
-
-    @PostMapping("/test2")
-    private ResponseEntity<String> forDBTest() {
-
-        Optional<Long> test = flowerRepository.findFlowerByName("test");
-
-        return ResponseEntity.ok("success");
-    }
 
     @PostMapping("/text-input")
     private SseEmitter processSendUserInputToAIServer(@RequestBody UserDataHolder userDataHolder) {
