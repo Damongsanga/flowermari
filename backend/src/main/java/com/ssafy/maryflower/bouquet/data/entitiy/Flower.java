@@ -2,6 +2,7 @@ package com.ssafy.maryflower.bouquet.data.entitiy;
 
 import com.ssafy.maryflower.global.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.ArrayList;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class Flower extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long flowerId;
 
     private String englishName;

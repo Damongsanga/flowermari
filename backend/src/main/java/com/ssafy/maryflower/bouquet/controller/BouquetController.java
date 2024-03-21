@@ -29,6 +29,9 @@ public class BouquetController {
     private final DataPublishService DataPublishService;
 
 
+
+//    @GetMapping("/sse")
+
     @PostMapping("/text-input")
     private SseEmitter processSendUserInputToAIServer(@RequestBody UserDataHolder userDataHolder) {
 
