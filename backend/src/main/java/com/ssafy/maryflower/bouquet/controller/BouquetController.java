@@ -56,9 +56,11 @@ public class BouquetController {
         // 요청에 대한 requestId 생성
         String requestId= bouquetService.generateRequestID();
 
+        // userId를 key 값으로 requestId 캐시 (regenerate시 requestId를 기억하기 위함)
+        cacheService.cacheRequestIdWithUserId(userId, requestId);
+
         // userData를 담아 놓을 Dto 생성
         userDataHolder.setUserId (userId);
-        userDataHolder.setRequestId(requestId);
 
         // userID를 key로 하여 데이터 Redis 캐시에 저장.
         cacheService.cacheUserDataWithUserId(requestId, userDataHolder);
@@ -70,24 +72,28 @@ public class BouquetController {
         return sseEmitters.addEmitter(requestId);
     }
 
-//    @PostMapping("/re-generate")
-//    private ResponseEntity<?> processSendUserFlowersToAIServer(List<String> flowers){
-//        // 토큰에서 userId 추출.
-//        Long userId=1L;
-//
-//        // api 호출 회수 조회.
-//        if(bouquetService.checkApiUses(userId)>5) {
-//            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS,"API 사용 횟수를 초과하였습니다");
-//        }
-//
-//        // api 사용로그 저장
-//        bouquetService.createApiLog(userId);
-//
-//        // redis 캐시 확인해 requestId 조회.
-//
-//
-//
-//    }
+    @PostMapping("/re-generate")
+    private ResponseEntity<String> processSendUserFlowersToAIServer(@RequestBody List<String> flowers){
+
+        // 토큰에서 userId 추출.
+        Long userId=1L;
+
+        // api 호출 회수 조회.
+        if(bouquetService.checkApiUses(userId)>5) {
+            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS,"API 사용 횟수를 초과하였습니다");
+        }
+
+        // api 사용로그 저장
+        bouquetService.createApiLog(userId);
+
+        // redis 캐시 확인해 requestId 조회.
+        String requestId=cacheService.cacheRequestIdWithUserId(userId);
+
+        // Redis ch1으로 publish
+        DataPublishService.publishFlowerDataToAIServer(flowers,requestId);
+
+        return ResponseEntity.ok("success");
+    }
 
 
 

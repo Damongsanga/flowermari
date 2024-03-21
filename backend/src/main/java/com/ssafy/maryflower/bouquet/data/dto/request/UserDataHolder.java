@@ -14,6 +14,5 @@ public class UserDataHolder {
     private String whom;
     private String situation;
     private String message;
-    private String requestId;
     private Long userId;
 }

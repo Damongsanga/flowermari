@@ -1,6 +1,7 @@
 package com.ssafy.maryflower.bouquet.sse;
 
 import com.ssafy.maryflower.bouquet.data.dto.response.firstGenerateDto;
+import com.ssafy.maryflower.bouquet.data.dto.response.reGenerateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -33,11 +34,22 @@ public class SseEmitters {
     }
 
     // requestId에 따라 해당 클라이언트에게 메세지 전송.
-    public void sendfirstGenerateDtoToClient(String requestId,firstGenerateDto firstGenerateDto){
+    public void sendGenerateDtoToClient(String requestId,firstGenerateDto firstGenerateDto){
         SseEmitter emitter= emitters.get(requestId);
         if(emitter !=null){
             try{
                 emitter.send(SseEmitter.event().name("firstGenerateEvent").data(firstGenerateDto));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void sendGenerateDtoToClient(String requestId, reGenerateDto regeneratedto){
+        SseEmitter emitter= emitters.get(requestId);
+        if(emitter !=null){
+            try{
+                emitter.send(SseEmitter.event().name("reGenerateEvent").data(regeneratedto));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

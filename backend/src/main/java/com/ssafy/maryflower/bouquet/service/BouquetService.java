@@ -1,18 +1,14 @@
 package com.ssafy.maryflower.bouquet.service;
 
 
-import com.ssafy.maryflower.bouquet.data.dto.response.firstGenerateDto;
-import com.ssafy.maryflower.bouquet.data.dto.transfer.FlowersTransferDto;
 import com.ssafy.maryflower.bouquet.data.entitiy.ApiLog;
 import com.ssafy.maryflower.bouquet.data.repository.ApiLogRepository;
-import com.ssafy.maryflower.bouquet.data.repository.FlowerRepository;
-import com.ssafy.maryflower.infrastructure.RedisEventPublisher;
 import com.ssafy.maryflower.member.data.entitiy.Member;
 import com.ssafy.maryflower.member.data.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -49,7 +45,13 @@ public class BouquetService {
         return apiLogRepository.numberOfApiUses(userid,fromDateTime);
     }
 
+    // 사용자가 입력한 text 기반 프롬프트 생성. (메인 꽃, 꽃말 기준 추천 꽃 생성)
     public String generatePrompt(String whom, String situation, String message){
+        return "";
+    }
+
+    // 사용자가 선택한 꽃 기반 프롬프트 생성 (꽃말 기준 추천 꽃 생성)
+    public String generatePrompt(List<String> flowers){
         return "";
     }
 }

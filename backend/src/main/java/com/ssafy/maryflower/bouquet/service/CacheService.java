@@ -3,6 +3,7 @@ package com.ssafy.maryflower.bouquet.service;
 import com.ssafy.maryflower.bouquet.data.dto.request.UserDataHolder;
 import com.ssafy.maryflower.bouquet.data.dto.response.FlowerDto;
 import com.ssafy.maryflower.bouquet.data.dto.response.firstGenerateDto;
+import com.ssafy.maryflower.bouquet.data.dto.response.reGenerateDto;
 import com.ssafy.maryflower.bouquet.data.entitiy.Flower;
 import com.ssafy.maryflower.bouquet.data.repository.FlowerRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +30,17 @@ public class CacheService {
     만약 캐시에 이미 데이터가 존재 -> 캐시에서 데이터 반환 후 메서드 실행 x.
     캐시에 데이터 존재x -> 캐시에 해당 키의 데이터 없으먄 메서드 실행 후, 반환 값 캐시에 저장.
      */
+
     @CachePut(value = "UserDataHolder", key="#requestId")
     public UserDataHolder cacheUserDataWithUserId(String requestId, UserDataHolder userDataHolder) {
 
         return userDataHolder;
+    }
+
+    @Cacheable(value = "UserDataHolder", key="#requestId")
+    public UserDataHolder cacheUserDataWithUserId(String requestId) {
+
+        return null;
     }
 
     @CachePut(value = "firstGenerateDto", key="#requestId")
@@ -42,6 +50,17 @@ public class CacheService {
 
     @Cacheable(value = "firstGenerateDto", key="#requestId")
     public firstGenerateDto cachefirstGenerateDto(String requestId){
+        return null;
+    }
+
+    @CachePut(value = "reGenerateDto", key="#requestId")
+    public reGenerateDto cachereGenerateDto(String requestId, reGenerateDto reGenerateDto){
+        return reGenerateDto;
+    }
+
+    @Cacheable(value = "reGenerateDto", key="#requestId")
+    public reGenerateDto cachereGenerateDto(String requestId){
+
         return null;
     }
     /*
@@ -70,5 +89,14 @@ public class CacheService {
     }
 
 
+    @CachePut(value = "requestId", key="#userId")
+    public String cacheRequestIdWithUserId(Long userId,String requestId){
+        return requestId;
+    }
+
+    @Cacheable(value= "requestId", key="#userId")
+    public String cacheRequestIdWithUserId(Long userId){
+        return null;
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.ssafy.maryflower.bouquet.data.dto.response;
 
-import com.ssafy.maryflower.bouquet.data.entitiy.Flower;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +25,7 @@ public class firstGenerateDto {
     private String bouquetUrl;
 
     // 사용자의 꽃다발 생성 요청 횟수.
-    private String apiUsageCount;
+    private Integer apiUsageCount;
 
     // 꽃다발 생성에 사용된 꽃 데이터
     private List<Long> usedFlower;
