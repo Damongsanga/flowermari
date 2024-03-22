@@ -19,9 +19,9 @@ public class BouquetService {
     private final MemberRepository memberRepository;
     private final ApiLogRepository apiLogRepository;
     private final BouquetRepository bouquetRepository;
-    private final MemberbouquetRepository memberbouquetRepository;
+    private final MemberBouquetRepository MemberBouquetRepository;
     private final FlowerRepository flowerRepository;
-    private final FlowerbouquetRepository flowerbouquetRepository;
+    private final FlowerBouquetRepository FlowerBouquetRepository;
     // random uuid 생성을 통해 reqyestId 설정
     public String generateRequestID(){
         UUID uuid=UUID.randomUUID();
@@ -63,20 +63,20 @@ public class BouquetService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(()->new IllegalArgumentException("부적절한 멤버 아이디"));
 
-        // Memberbouquet 생성 및 저장.
-        Memberbouquet memberbouquet = new Memberbouquet();
-        memberbouquet.setBouquet(bouquet);
-        memberbouquet.setMember(member);
-        memberbouquetRepository.save(memberbouquet);
+        // MemberBouquet 생성 및 저장.
+        MemberBouquet MemberBouquet = new MemberBouquet();
+        MemberBouquet.setBouquet(bouquet);
+        MemberBouquet.setMember(member);
+        MemberBouquetRepository.save(MemberBouquet);
 
-        // 각 Flower ID에 대해 Flowerbouquet 생성 및 저장.
+        // 각 Flower ID에 대해 FlowerBouquet 생성 및 저장.
         for(Long flowerId:flowerIds){
             Flower flower = flowerRepository.findById(flowerId)
                     .orElseThrow(()-> new IllegalArgumentException("적잘하지 않은 flowerId 입니다"));
-            Flowerbouquet flowerbouquet=new Flowerbouquet();
-            flowerbouquet.setBouquet(bouquet);
-            flowerbouquet.setFlower(flower);
-            flowerbouquetRepository.save(flowerbouquet);
+            FlowerBouquet FlowerBouquet=new FlowerBouquet();
+            FlowerBouquet.setBouquet(bouquet);
+            FlowerBouquet.setFlower(flower);
+            FlowerBouquetRepository.save(FlowerBouquet);
         }
 
     }

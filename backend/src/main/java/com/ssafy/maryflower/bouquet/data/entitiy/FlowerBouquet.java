@@ -1,6 +1,5 @@
 package com.ssafy.maryflower.bouquet.data.entitiy;
 
-import com.ssafy.maryflower.member.data.entitiy.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,18 +7,18 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Memberbouquet {
+public class FlowerBouquet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name= "member_id")
-    private Member member;
+    @JoinColumn(name = "flower_id")
+    private Flower flower;
 
     @ManyToOne
-    @JoinColumn(name= "bouquet_id")
+    @JoinColumn(name = "bouquet_id")
     private Bouquet bouquet;
 
 

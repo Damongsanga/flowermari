@@ -5,8 +5,9 @@ import com.ssafy.maryflower.member.data.entitiy.Member;
 import jakarta.persistence.*;
 import lombok.Setter;
 
-@Entity
+
 @Setter
+@Entity
 public class ApiLog extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +18,7 @@ public class ApiLog extends BaseEntity {
      다 대 일 관계
      member_id 칼럼을 통해 조인.
      */
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 

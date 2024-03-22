@@ -3,16 +3,21 @@ package com.ssafy.maryflower.bouquet.data.entitiy;
 import com.ssafy.maryflower.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.ArrayList;
 
 @Entity
 @Getter
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class Flower extends BaseEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long flowerId;
 
     private String englishName;
@@ -30,7 +35,7 @@ public class Flower extends BaseEntity {
      */
 
     @OneToMany(mappedBy = "flower")
-    private List<Flowerbouquet> flowerBouquets = new ArrayList<>();
+    private List<FlowerBouquet> FlowerBouquets = new ArrayList<>();
 
 
 

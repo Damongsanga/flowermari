@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Bouquet extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     // Bouquet 엔티티의 기본키(PK)를 자동으로 생성.
     private Long bouquetId;
     private String whom;
@@ -22,10 +22,10 @@ public class Bouquet extends BaseEntity {
     private String imageUrl;
 
     @OneToMany(mappedBy = "bouquet")
-    private List<Flowerbouquet> flowerBouquets = new ArrayList<>();
+    private List<FlowerBouquet> FlowerBouquets = new ArrayList<>();
 
     @OneToMany(mappedBy = "bouquet")
-    private List<Memberbouquet> memberbouquets = new ArrayList<>();
+    private List<MemberBouquet> MemberBouquets = new ArrayList<>();
     /*
     매핑되는 상대테이블의 List를 가지고 있는 이유
     - 한 엔티티에서 연관된 다른 엔티티로의 접근과 반대 방향으로의 접근 모두 가능하게 하기 위해.

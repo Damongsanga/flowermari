@@ -2,13 +2,16 @@ package com.ssafy.maryflower.member.data.entitiy;
 
 import com.ssafy.maryflower.bouquet.data.entitiy.ApiLog;
 import com.ssafy.maryflower.bouquet.data.entitiy.Bouquet;
-import com.ssafy.maryflower.bouquet.data.entitiy.Memberbouquet;
+import com.ssafy.maryflower.bouquet.data.entitiy.MemberBouquet;
 import com.ssafy.maryflower.global.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Setter;
+
 import java.util.List;
 import java.util.ArrayList;
 
 @Entity
+@Setter
 public class Member extends BaseEntity {
 
     @Id
@@ -20,7 +23,7 @@ public class Member extends BaseEntity {
     private String profileImage;
 
     // ApiLog에 있는 member을 기준으로 매핑.
-    @OneToMany(mappedBy="member")
+    @OneToMany(mappedBy = "member")
     // Member 테이블이 여러개의 ApiLog테이블과 매핑될 수 있으므로 List로 관리.
     private List<ApiLog> apiLogs=new ArrayList<>();
 
@@ -31,6 +34,6 @@ public class Member extends BaseEntity {
 
      */
     @OneToMany(mappedBy = "member")
-    private List<Memberbouquet> memberbouquets=new ArrayList<>();
+    private List<MemberBouquet> MemberBouquets=new ArrayList<>();
     // 매핑되는 상대 엔티티 List 저장. .
 }
