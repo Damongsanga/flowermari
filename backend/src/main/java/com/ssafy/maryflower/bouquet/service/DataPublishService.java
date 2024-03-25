@@ -9,13 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class DataPublishService {
 
     private final BouquetService bouquetService;
-    private final FlowerCombinationService flowerCombinationService;
+    private final SelectFlowerService selectFlowerService;
     private final FlowerRepository flowerRepository;
     private final CacheService cacheService;
     private final RedisEventPublisher redisEventPublisher;
@@ -25,11 +26,9 @@ public class DataPublishService {
     @Async
     public void publishFlowerDataToAIServer(String whom,String situation,String message,String requestId){
 
-        // 사용자가 입력한 text로 prompt 생성
-        String prompt= bouquetService.generatePrompt(whom,situation,message);
 
-        // gpt를 통해
-        String[] flowers=flowerCombinationService.callChatGptApi(prompt).split(",");
+        // gpt api를 통해 사용될 꽃, 추천 꽃 생성,
+        String[] flowers= selectFlowerService.chat(selectFlowerService.makePrompt(whom,situation,message)).split(",");
 
         firstGenerateDto firstgeneratedto=new firstGenerateDto();
 
@@ -65,15 +64,19 @@ public class DataPublishService {
     @Async
     public void publishFlowerDataToAIServer(List<String> userFlowers, String requestId){
 
-        // 사용자가 선택한 꽃 데이터로 prompt 생성
-        String prompt= bouquetService.generatePrompt(userFlowers);
-
-        // gpt를 통해 추천 꽃 추출(꽃말 기준)
-        String[] flowers=flowerCombinationService.callChatGptApi(prompt).split(",");
+        String[] flowers= selectFlowerService.chat(selectFlowerService.makePrompt(userFlowers))
+                .replace(", ",",") .split(",");
+        System.out.println("test 돌림 ");
+        for(String test:flowers){
+            System.out.print(test+",");
+        }
 
         reGenerateDto regenerateDto=new reGenerateDto();
 
         for(int i=0;i<userFlowers.size();i++){
+            Optional<Long> id=flowerRepository.findFlowerByName(userFlowers.get(i));
+            regenerateDto.getUsedFlower().add(id.orElseThrow());
+
             // dto에 mainflower pk 저장
             flowerRepository.findFlowerByName(userFlowers.get(i)).ifPresent(regenerateDto.getUsedFlower()::add);
 
@@ -89,6 +92,10 @@ public class DataPublishService {
 
         // regeneratedto redis cache에 저장.
         cacheService.cachereGenerateDto(requestId,regenerateDto);
+
+        for(Long l:regenerateDto.getRecommendByMeaning()){
+            System.out.println(l+" ");
+        }
 
         // main flower 정보, 요청 아이디 dto로 Redis publish
         redisEventPublisher.sendMessage(new FlowersTransferDto(regenerateDto.getUsedFlower(),requestId));

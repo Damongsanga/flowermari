@@ -4,6 +4,8 @@ import com.ssafy.maryflower.bouquet.data.dto.request.UserDataHolder;
 import com.ssafy.maryflower.bouquet.data.repository.FlowerRepository;
 import com.ssafy.maryflower.bouquet.service.BouquetService;
 import com.ssafy.maryflower.bouquet.service.CacheService;
+import com.ssafy.maryflower.bouquet.service.DataPublishService;
+import com.ssafy.maryflower.bouquet.service.SelectFlowerService;
 import com.ssafy.maryflower.infrastructure.RedisEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +24,12 @@ import java.util.Optional;
 @Slf4j
 public class TestController {
 
+    private final SelectFlowerService selectFlowerService;
     private final FlowerRepository flowerRepository;
     private final RedisEventPublisher redisEventPublisher;
     private final BouquetService bouquetService;
     private final CacheService cacheService;
+    private final DataPublishService dataPublishService;
 
     // 서버 커넥션 테스트
     @PostMapping("/connection-test")
@@ -114,5 +118,35 @@ public class TestController {
         System.out.println(cacheService.cacheUserDataWithUserId("requestId")==null);
         return ResponseEntity.ok("success");
     }
+
+    @PostMapping("/testgptapi")
+    public ResponseEntity<String> testgptapi(){
+
+        String msg= selectFlowerService.chat(selectFlowerService.makePrompt("여자친구","100일 기념일","사랑을 맹세"));
+        List<String> flowers=new ArrayList<>();
+        flowers.add("수국");
+        flowers.add("해바라기");
+//        flowers.add("하양 장미");
+
+        String msg2= selectFlowerService.chat(selectFlowerService.makePrompt(flowers));
+
+        System.out.println(msg);
+        System.out.println("=================================================");
+        System.out.println(msg2);
+        return ResponseEntity.ok("success");
+    }
+
+    @PostMapping("/publishFlowerDataToAIServerTest")
+    public ResponseEntity<String> publishFlowerDataToAIServerTest(){
+        List<String> flowers=new ArrayList<>();
+        flowers.add("아이리스");
+        flowers.add("빨강 장미");
+        flowers.add("보라 튤립");
+        dataPublishService.publishFlowerDataToAIServer("연인","100일 기념일","영원한 사랑", "reqeustID");
+//        dataPublishService.publishFlowerDataToAIServer(flowers,"reqeustID");
+
+        return ResponseEntity.ok("success");
+    }
+
 
 }

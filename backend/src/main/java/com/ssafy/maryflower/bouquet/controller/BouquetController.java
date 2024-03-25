@@ -68,6 +68,7 @@ public class BouquetController {
         // API를 통해 꽃다발에 사용할 꽃 추출 후, Redis ch1으로 publish
         DataPublishService.publishFlowerDataToAIServer(userDataHolder.getWhom(), userDataHolder.getSituation(), userDataHolder.getMessage(), requestId);
 
+        System.out.println("여기까지 옴");
         // 200 응답 반환
         return ResponseEntity.ok("success");
     }

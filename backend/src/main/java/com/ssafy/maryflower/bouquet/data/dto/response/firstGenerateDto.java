@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -16,10 +17,16 @@ import java.util.List;
  DB에 저장된 모든 꽃 세부 데이터.
  */
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @Setter
 public class firstGenerateDto {
+
+    public firstGenerateDto(){
+        this.usedFlower=new ArrayList<>();
+        this.recommendByMeaning=new ArrayList<>();
+        this.recommendByPopularity=new ArrayList<>();
+        this.allFlowers=new ArrayList<>();
+    }
 
     // 꽃다발이 저장된 url
     private String bouquetUrl;

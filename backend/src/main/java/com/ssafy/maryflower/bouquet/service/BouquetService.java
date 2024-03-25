@@ -81,13 +81,4 @@ public class BouquetService {
 
     }
 
-    // 사용자가 입력한 text 기반 프롬프트 생성. (메인 꽃, 꽃말 기준 추천 꽃 생성)
-    public String generatePrompt(String whom, String situation, String message){
-        return "";
-    }
-
-    // 사용자가 선택한 꽃 기반 프롬프트 생성 (꽃말 기준 추천 꽃 생성)
-    public String generatePrompt(List<String> flowers){
-        return "";
-    }
 }

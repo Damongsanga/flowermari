@@ -5,13 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class reGenerateDto {
+
+    public reGenerateDto(){
+        this.usedFlower = new ArrayList<>();
+        this.recommendByMeaning = new ArrayList<>();
+        this.recommendByPopularity = new ArrayList<>();
+    }
 
     private String bouquetUrl;
 
