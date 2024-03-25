@@ -24,7 +24,7 @@ public class SseEmitters {
         emitter.onCompletion(() -> emitters.remove(requestId));
         emitter.onTimeout(() -> emitters.remove(requestId));
         emitter.onError((e) -> emitters.remove(requestId));
-
+        System.out.println("에미터 사이즈 : "+emitters.size());
         return emitter;
     }
 
@@ -34,11 +34,17 @@ public class SseEmitters {
     }
 
     // requestId에 따라 해당 클라이언트에게 메세지 전송.
-    public void sendGenerateDtoToClient(String requestId,firstGenerateDto firstGenerateDto){
+    public void sendGenerateDtoToClient(String requestId,firstGenerateDto firstgeneratedto){
+        System.out.println(" 여기왔나?? ");
+        System.out.println(firstgeneratedto.getAllFlowers());
+        System.out.println(firstgeneratedto.getBouquetUrl());
+        System.out.println(firstgeneratedto.getApiUsageCount());
+
         SseEmitter emitter= emitters.get(requestId);
         if(emitter !=null){
             try{
-                emitter.send(SseEmitter.event().name("firstGenerateEvent").data(firstGenerateDto));
+                System.out.println(requestId);
+                emitter.send(SseEmitter.event().name("firstGenerateEvent").data(firstgeneratedto));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

@@ -26,6 +26,7 @@ public class DataPublishService {
     @Async
     public void publishFlowerDataToAIServer(String whom,String situation,String message,String requestId){
 
+        System.out.println("whom = "+whom);
 
         // gpt api를 통해 사용될 꽃, 추천 꽃 생성,
         String[] flowers= selectFlowerService.chat(selectFlowerService.makePrompt(whom,situation,message)).split(",");
