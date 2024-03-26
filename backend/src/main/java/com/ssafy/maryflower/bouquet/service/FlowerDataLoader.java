@@ -46,7 +46,6 @@ public class FlowerDataLoader implements CommandLineRunner {
         System.out.println("member data load");
         Member member = new Member();
         member.setKakaoId("TestKakaoId");
-        member.setNickname("TestNickName");
         member.setProfileImage("TestPorfileImage");
         memberRepository.save(member);
     }

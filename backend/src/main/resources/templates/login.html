@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Insert title here</title>
 </head>
 <body>
-    <a href="/oauth2/authorization/kakao">카카오 로그인</a>
+<h1>Kakao Login</h1>
+<span th:if="${userId==null}">
+	<a href="https://kauth.kakao.com/oauth/authorize?client_id=${90bf89533551cd611c6591032a23caba}&redirect_uri=${http://localhost:8080/login/oauth2/code/kakao}&response_type=code">  //본인 걸로 수정하기
+		<img src = "/icon/kakao_login_medium_narrow.png">
+	</a>
+</span>
+<span th:if="${userId!=null}">
+	<form name="logout" action="http://localhost:8080/logout">
+		<input type="submit" value="로그아웃">
+	</form>
+</span>
 </body>
 </html>
