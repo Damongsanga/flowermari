@@ -158,7 +158,7 @@ public class TestController {
 
     @PostMapping("/removeSseConnection")
     public ResponseEntity<String> removesseconnection(){
-//        sseEmitters.removeAllEmitter();
+        sseEmitters.removeAllEmitter();
         return ResponseEntity.ok("success");
     }
 

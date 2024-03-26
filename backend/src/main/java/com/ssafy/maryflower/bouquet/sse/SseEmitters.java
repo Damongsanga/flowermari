@@ -28,7 +28,11 @@ public class SseEmitters {
 
         return emitter;
     }
-
+    
+    // 모든 연결 제거
+    public void removeAllEmitter(){
+        emitters.clear();
+    }
     // 연결을 제거
     public void removeEmitter(String requestId) {
         emitters.remove(requestId);
