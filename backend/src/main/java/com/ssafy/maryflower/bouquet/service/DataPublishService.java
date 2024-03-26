@@ -54,6 +54,11 @@ public class DataPublishService {
 
         // firstgeneratedto redis cache에 저장.
         cacheService.cachefirstGenerateDto(requestId,firstgeneratedto);
+        System.out.println("꽃다발 생성 로직 AI로 Publish");
+
+        for(Long l: firstgeneratedto.getUsedFlower()){
+            System.out.print(l+" ");
+        }
 
         // main flower 정보, 요청 아이디 dto로 Redis publish
         redisEventPublisher.sendMessage(new FlowersTransferDto(firstgeneratedto.getUsedFlower(),requestId));

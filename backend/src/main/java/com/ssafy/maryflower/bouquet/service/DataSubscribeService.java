@@ -15,6 +15,7 @@ public class DataSubscribeService {
     private final CacheService cacheService;
     public void subscribeBouquetDataFromAIServer(BouquetUrlTransferDto bouquetUrlTransferDto){
         // Test
+        System.out.println("AI로부터 subscribe");
         System.out.println(bouquetUrlTransferDto.getBouquetUrl()+ "  "+bouquetUrlTransferDto.getRequestId());
 
         if(cacheService.cachereGenerateDto(bouquetUrlTransferDto.getRequestId())!=null){

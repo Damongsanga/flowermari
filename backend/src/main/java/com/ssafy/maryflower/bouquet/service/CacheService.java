@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,10 +83,9 @@ public class CacheService {
      */
     @Cacheable(value = "allFlowers")
     public List<FlowerDto> getAllFlowers(){
-
+        System.out.println("getAllFlowers 실행 ");
         // 엔티티 전체 조회
         List<Flower> flowers= flowerRepository.findAll();
-
         // 클라이언트로 반환 할 전체 DTO
         List<FlowerDto> flowerDtos=new ArrayList<>();
 
@@ -99,8 +99,10 @@ public class CacheService {
             );
             flowerDtos.add(dto);
         }
+        System.out.println(flowerDtos.size());
         return flowerDtos;
     }
+
 
 
     @CachePut(value = "requestId", key="#userId")
@@ -115,5 +117,7 @@ public class CacheService {
 
     @CacheEvict(value="requestId", key="userId")
     public void deleteRequestIdFromCache(Long userId){}
+
+
 
 }

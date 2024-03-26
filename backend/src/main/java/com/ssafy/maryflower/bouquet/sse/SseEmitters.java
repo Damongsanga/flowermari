@@ -20,6 +20,7 @@ public class SseEmitters {
         SseEmitter emitter=new SseEmitter(Long.MAX_VALUE);
         emitters.put(requestId, emitter);
 
+        System.out.println("sse 연결 수 : "+emitters.size());
         //클라이언트와 연결 종료 시 이벤트 핸들러
         emitter.onCompletion(() -> emitters.remove(requestId));
         emitter.onTimeout(() -> emitters.remove(requestId));

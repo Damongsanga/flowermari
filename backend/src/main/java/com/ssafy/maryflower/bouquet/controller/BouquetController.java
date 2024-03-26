@@ -34,7 +34,7 @@ public class BouquetController {
     // SSE 통신 엔드포인트
     @GetMapping(value = "/subscribe", produces = "text/event-stream")
     public SseEmitter subscribe(){
-
+        System.out.println("sse 연결");
         Long userId = 1L;
         return sseEmitters.addEmitter(cacheService.cacheRequestIdWithUserId(userId));
     }
