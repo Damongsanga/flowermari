@@ -3,6 +3,8 @@ package com.ssafy.maryflower.bouquet.service;
 
 import com.ssafy.maryflower.bouquet.data.entity.*;
 import com.ssafy.maryflower.bouquet.data.repository.*;
+import com.ssafy.maryflower.bouquet.exception.BouquetErrorCode;
+import com.ssafy.maryflower.bouquet.exception.BouquetException;
 import com.ssafy.maryflower.member.data.entity.Member;
 import com.ssafy.maryflower.member.data.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +34,7 @@ public class BouquetService {
     @Transactional
     public void createApiLog(Long userId){
         // 멤버 조회.
-        Member member=memberRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("부적절한 ID: " + userId));
+        Member member=memberRepository.findById(userId).orElseThrow(()-> new BouquetException(BouquetErrorCode.INVALID_FLOWER_ID));
 
         // Api 로그 생성
         ApiLog apiLog=new ApiLog();
@@ -55,7 +57,7 @@ public class BouquetService {
 
         // Member 엔티티 조회
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(()->new IllegalArgumentException("부적절한 멤버 아이디"));
+                .orElseThrow(()->new BouquetException(BouquetErrorCode.INVALID_FLOWER_ID));
         bouquet.setWhom(whom);
         bouquet.setSituation(situation);
         bouquet.setMessage(message);
@@ -76,7 +78,7 @@ public class BouquetService {
         // 각 Flower ID에 대해 FlowerBouquet 생성 및 저장.
         for(Long flowerId:flowerIds){
             Flower flower = flowerRepository.findById(flowerId)
-                    .orElseThrow(()-> new IllegalArgumentException("적잘하지 않은 flowerId 입니다"));
+                    .orElseThrow(()-> new BouquetException(BouquetErrorCode.INVALID_FLOWER_ID));
             FlowerBouquet FlowerBouquet=new FlowerBouquet();
             FlowerBouquet.setBouquet(bouquet);
             FlowerBouquet.setFlower(flower);

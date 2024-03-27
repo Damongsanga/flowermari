@@ -44,11 +44,18 @@ public class SseEmitters {
 
         if(emitter !=null){
             try{
-//                System.out.println(firstGenerateDto.getBouquetUrl());
-//                System.out.println(firstGenerateDto.getApiUsageCount());
-//                System.out.println("size = " +firstGenerateDto.getAllFlowers().size());
-//                System.out.println(firstGenerateDto.getUsedFlower().size());
-//                System.out.println(firstGenerateDto.getRecommendByMeaning());
+                if(firstGenerateDto.getUsedFlower().size()!=firstGenerateDto.getRecommendByMeaning().size()){
+                    for(int i=0;i<firstGenerateDto.getUsedFlower().size()-firstGenerateDto.getRecommendByMeaning().size();i++){
+                        firstGenerateDto.getRecommendByMeaning().add(Long.valueOf(i+2));
+                    }
+                }
+                System.out.println("--------------------firstGenerate-------------------");
+                System.out.println("url : "+firstGenerateDto.getBouquetUrl());
+                System.out.println("Api 호출 횟수 : "+firstGenerateDto.getApiUsageCount());
+                System.out.println("AllFLower size = " +firstGenerateDto.getAllFlowers().size());
+                System.out.println("UsedFlower size : "+firstGenerateDto.getUsedFlower().size());
+                System.out.println("Recommended Flower Size : "+firstGenerateDto.getRecommendByMeaning());
+                System.out.println("Recommended By Popularity : "+firstGenerateDto.getRecommendByPopularity());
                 emitter.send(SseEmitter.event().name("firstGenerateEvent").data(firstGenerateDto));
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -60,7 +67,12 @@ public class SseEmitters {
         SseEmitter emitter= emitters.get(requestId);
         if(emitter !=null){
             try{
-//                System.out.println("콘솔 "+regeneratedto.getUsedFlower());
+                System.out.println("--------------------regeneratedto-------------------");
+                System.out.println("url : "+regeneratedto.getBouquetUrl());
+                System.out.println("Api 호출 횟수 : "+regeneratedto.getApiUsageCount());
+                System.out.println("UsedFlower size : "+regeneratedto.getUsedFlower().size());
+                System.out.println("Recommended Flower Size : "+regeneratedto.getRecommendByMeaning());
+                System.out.println("Recommended By Popularity : "+regeneratedto.getRecommendByPopularity());
                 emitter.send(SseEmitter.event().name("reGenerateEvent").data(regeneratedto));
             } catch (IOException e) {
                 throw new RuntimeException(e);

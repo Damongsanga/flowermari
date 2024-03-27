@@ -26,7 +26,8 @@ public class SelectFlowerService {
     }
 
     public String makePrompt(String whom,String situation,String message){
-        String prompt="\"프롬프트\" : 누구에게 : "+whom+" 어떤 상황 : "+situation+ " 어떤 메시지 : " + message +" 꽃말을 통해 조합하고 싶어.\n" +
+        String prompt="너는 사용자에게 text list를 받아 관련된 꽃 이름이랑 각각의 꽃과 꽃말이 비슷한 꽃을 반환하는 역할이야 \n" +
+                "\"프롬프트\" : 누구에게 : "+whom+" 어떤 상황 : "+situation+ " 어떤 메시지 : " + message +" 꽃말을 통해 조합하고 싶어.\n" +
                 "\n" +
                 "| 빨강 장미 |  |  | 사랑, 아름다움, 열정 |\n" +
                 "| --- | --- | --- | --- |\n" +
