@@ -56,7 +56,6 @@ public class SseEmitters {
                 System.out.println("UsedFlower size : "+firstGenerateDto.getUsedFlower().size());
                 System.out.println("Recommended Flower Size : "+firstGenerateDto.getRecommendByMeaning());
                 System.out.println("Recommended By Popularity : "+firstGenerateDto.getRecommendByPopularity());
-                firstGenerateDto.setBouquetUrl("https://a305-project-bucket.s3.ap-northeast-2.amazonaws.com/gg.jfif");
                 emitter.send(SseEmitter.event().name("firstGenerateEvent").data(firstGenerateDto));
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -74,7 +73,6 @@ public class SseEmitters {
                 System.out.println("UsedFlower size : "+regeneratedto.getUsedFlower().size());
                 System.out.println("Recommended Flower Size : "+regeneratedto.getRecommendByMeaning());
                 System.out.println("Recommended By Popularity : "+regeneratedto.getRecommendByPopularity());
-                regeneratedto.setBouquetUrl("https://a305-project-bucket.s3.ap-northeast-2.amazonaws.com/g.jfif");
                 emitter.send(SseEmitter.event().name("reGenerateEvent").data(regeneratedto));
 
 
