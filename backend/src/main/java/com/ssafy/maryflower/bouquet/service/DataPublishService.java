@@ -69,7 +69,7 @@ public class DataPublishService {
 
         String[] flowers= selectFlowerService.chat(selectFlowerService.makePrompt(userFlowers))
                 .replace(", ",",") .split(",");
-        System.out.println("test 돌림 ");
+        System.out.println("regenerate Test");
         for(String test:flowers){
             System.out.print(test+",");
         }
@@ -81,9 +81,16 @@ public class DataPublishService {
 
             // dto에 mainflower pk 저장
             flowerRepository.findFlowerByName(userFlowers.get(i)).ifPresent(regenerateDto.getUsedFlower()::add);
-
+            final Long tempI = Long.valueOf(i);
             // dto에 꽃말기준 추천 꽃 pk 저장
-            flowerRepository.findFlowerByName(flowers[i]).ifPresent(regenerateDto.getRecommendByMeaning()::add);
+            flowerRepository.findFlowerByName(flowers[i]).
+                    ifPresentOrElse(
+                            regenerateDto.getRecommendByMeaning()::add,
+                            ()-> {
+                                regenerateDto.getRecommendByMeaning().add(tempI);
+                            }
+                    );
+
         }
 
         // 인기순 Top 7 꽃 id 리스트에 저징.
