@@ -72,6 +72,9 @@ public class KaKaoOAuthClient implements OAuthClient {
         ).getBody();
 
         log.info("id : {}", res.getOauthId());
+        log.info("name");
+        log.info("kakaoAccount : {}", res.getKakaoAccount());
+
         log.info("name : {}", res.getNickname());
         log.info("profileImage : {}", res.getProfileImageUrl());
 

@@ -68,6 +68,7 @@ public class OAuthService {
 
         return LoginDto.builder()
                 .memberId(member.getMemberId())
+                .nickname(member.getNickname())
                 .profileImage(member.getProfileImage())
                 .jwtToken(jwtToken)
                 .build();
@@ -95,12 +96,13 @@ public class OAuthService {
             Member member =
                     Member.builder()
                             .kakaoId(kakaoId)
+                            .nickname(res.getNickname())
                             .password(passwordEncoder.encode(kakaoId + salt))
                             .profileImage(res.getProfileImageUrl())
-
                             .role(UserRole.USER).build();
             memberRepository.save(member);
         }
     }
+
 
 }

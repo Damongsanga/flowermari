@@ -22,6 +22,7 @@ public class Member extends BaseEntity {
 
   @Column(unique = true)
   private String kakaoId;
+  private String nickname;
   private String password;
   private String profileImage;
 
@@ -29,13 +30,16 @@ public class Member extends BaseEntity {
   private UserRole role; //ADMIN, MANAGER, USER
 
   @Builder
-  public Member(Long memberId, String kakaoId, String password, String profileImage, UserRole role) {
+  public Member(Long memberId, String kakaoId, String nickname, String password, String profileImage, UserRole role) {
     this.memberId = memberId;
     this.kakaoId = kakaoId;
+    this.nickname = nickname;
     this.password = password;
     this.profileImage = profileImage;
     this.role = role;
   }
+
+
 
   // ApiLog에 있는 member을 기준으로 매핑.
   @OneToMany(mappedBy = "member")

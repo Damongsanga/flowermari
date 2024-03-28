@@ -31,6 +31,7 @@ public class KakaoOAuthMemberInfoResponse {
 
         @JsonProperty("profile")
         private Profile profile;
+
         @Getter
         public static class Profile {
             @JsonProperty("nickname")
