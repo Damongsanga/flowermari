@@ -18,11 +18,15 @@ import org.springframework.web.bind.annotation.*;
 public class ListController {
 
   private final ListService listService;
-
+  //리스트 조회
   @GetMapping("/list")
-  public ResponseEntity<Slice<BouquetFlowerResponseDto>> search(@RequestBody BouquetListRequestDto req, @PageableDefault(size = 4) Pageable pageable) {
+  public ResponseEntity<Slice<BouquetFlowerResponseDto>> search(BouquetListRequestDto req, @PageableDefault(size = 4) Pageable pageable) {
     Slice<BouquetFlowerResponseDto> res = listService.search(req, pageable);
     return ResponseEntity.ok(res);
   }
+
+  //다운로드 받기
+
+  //다운로드 받으면 memberbouquet 값 올리기
 
 }

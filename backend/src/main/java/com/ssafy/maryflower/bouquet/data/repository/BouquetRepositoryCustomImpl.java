@@ -75,12 +75,13 @@ public class BouquetRepositoryCustomImpl implements BouquetRepositoryCustom {
   }
 
   private BooleanExpression eqKeyword(BouquetListRequestDto req) {
-    if (req.getType().equals("name")) {
-      return flower.koreanName.contains(req.getSearchKeyword());
-    } else if(req.getType().equals("meaning")) {
-      return flower.meaning.contains(req.getSearchKeyword());
-    } else if(req.getType().equals("text")) {
-      return bouquet.whom.contains(req.getSearchKeyword())
+    switch(req.getType()){
+      case NAME:
+        return flower.koreanName.contains(req.getSearchKeyword());
+      case MEANING:
+        return flower.meaning.contains(req.getSearchKeyword());
+      case TEXT:
+        return bouquet.whom.contains(req.getSearchKeyword())
           .or(bouquet.situation.contains(req.getSearchKeyword()))
           .or(bouquet.message.contains(req.getSearchKeyword()));
     }

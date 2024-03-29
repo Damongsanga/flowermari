@@ -12,10 +12,11 @@ public class BouquetFlowerResponseDto {
   private Long memberId; //nickname: memberId로 구분하기로 함.
   private Long bouquetId;
   private String imageUrl;
-  private List<Flower> flowers;
+//  private List<Flower> flowers;
+  private Flower flowers;
 
   @QueryProjection
-  public BouquetFlowerResponseDto(Long memberId, Long bouquetId, String imageUrl, List<Flower> flowers) {
+  public BouquetFlowerResponseDto(Long memberId, Long bouquetId, String imageUrl, Flower flowers) {
     this.memberId = memberId;
     this.bouquetId = bouquetId;
     this.imageUrl = imageUrl;
