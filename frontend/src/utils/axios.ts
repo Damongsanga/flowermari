@@ -13,7 +13,6 @@ const useLocalAxios = (isAuth: boolean = true): AxiosInstance => {
 
     if (isAuth) {
         instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-            console.log("axios accesstoken",accessToken);
             if (!accessToken) {
                 console.log("로그인이 필요합니다.");
                 navigate('/');

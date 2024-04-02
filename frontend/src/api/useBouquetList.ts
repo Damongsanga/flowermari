@@ -25,11 +25,12 @@ export const useBouquetList = (type: string, searchKeyword: string, orderBy: str
                     type,
                     searchKeyword,
                     orderBy,
-                    size: 8,
+                    size: 4,
                     page,
                     ...(lastIndex !== null && { lastIndex })
                 },
             });
+            console.log(response.data);
             const newData = response.data.slice.content.filter(
                 item => !bouquets.find(bouquet => bouquet.bouquetId === item.bouquetId)
             );
@@ -44,21 +45,35 @@ export const useBouquetList = (type: string, searchKeyword: string, orderBy: str
         } finally {
             setLoading(false);
         }
-    }, [loading, type, searchKeyword, orderBy]);
-
+    }, [loading, hasMore, type, searchKeyword, orderBy]);
 
 
     useEffect(() => {
+        console.log("검색 useEffect");
         setPage(0);
         setLastIndex(null);
         setBouquets([]);
+        setHasMore(true);
+        // 검색 조건이 변경되었을 때만 fetchData 호출
         fetchData();
-    }, [type, searchKeyword, orderBy]);
+    }, []);
+    // useEffect(() => {
+    //     console.log("검색 useEffect");
+    //     const initSearch = async () => {
+    //         setPage(0);
+    //         setLastIndex(null);
+    //         setBouquets([]);
+    //         setHasMore(true);
+    //         await fetchData();
+    //     };
+    //
+    //     initSearch();
+    // }, [type, searchKeyword, orderBy]);
 
     const fetchMoreData = () => {
         if (loading || !hasMore) return;
         fetchData();
     };
 
-    return { loading, error, bouquets, hasMore, fetchMoreData };
+    return { loading, error, bouquets, hasMore, fetchMoreData, fetchData };
 };

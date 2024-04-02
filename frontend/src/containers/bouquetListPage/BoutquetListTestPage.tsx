@@ -11,7 +11,7 @@ export const BouquetListTestPage = () => {
         searchKeyword: '',
         orderBy: ''
     });
-    const { bouquets, loading, error, hasMore,fetchMoreData  } = useBouquetList(searchParams.type, searchParams.searchKeyword, searchParams.orderBy);
+    const { bouquets, loading, error, hasMore,fetchMoreData,fetchData  } = useBouquetList(searchParams.type, searchParams.searchKeyword, searchParams.orderBy);
 
     const observer = useRef<IntersectionObserver | null>(null);
     const lastBouquetElementRef = useCallback((node: Element | null) => {
@@ -25,11 +25,13 @@ export const BouquetListTestPage = () => {
         if (node) observer.current.observe(node);
     }, [loading, hasMore]);
     const handleSearch = () => {
+        console.log("검색");
         setSearchParams({
             type,
             searchKeyword,
             orderBy
         });
+        fetchData();
     };
     return (
         <div>
