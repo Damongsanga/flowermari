@@ -82,7 +82,7 @@
 
 
 ## 🎨 아키텍처
-![image](./docs/Architecture.png)
+![image](./docs/Architecture.PNG)
 
 
 ## 🌐 Version Info & Setting
